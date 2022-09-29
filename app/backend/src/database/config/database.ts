@@ -12,6 +12,6 @@ const config: Options = {
     timezone: 'Z',
   },
   logging: false,
-}
+};
 
 module.exports = config;
