@@ -5,6 +5,8 @@ const route = Router();
 
 const loginController = new LoginController();
 
-route.get('/login', loginController.endpoint);
+route.get('/', loginController.routeHealth);
+
+// route.post('/', loginController.endpoint);
 
 export default route;
