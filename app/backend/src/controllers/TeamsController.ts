@@ -10,7 +10,7 @@ class TeamsController {
   };
 
   public getAllTeams = async (_req: Request, res: Response): Promise<void> => {
-    const teams = (await this.service.getAllTeams());
+    const teams = (await this.service.getAllTeams()) as ITeam[];
     res.status(200).json(teams);
   };
 

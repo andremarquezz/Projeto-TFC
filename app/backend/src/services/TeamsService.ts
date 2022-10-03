@@ -7,7 +7,6 @@ class TeamsService {
 
   public async getAllTeams(): Promise<TeamModel[]> {
     const teams = await this.model.findAll();
-    console.log(teams);
     return teams;
   }
 
