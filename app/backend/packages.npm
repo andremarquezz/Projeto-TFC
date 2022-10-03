@@ -1,3 +1,5 @@
 express-async-errors
 supertest -D
 @types/supertest -D
+jsonwebtoken
+@types/jsonwebtoken

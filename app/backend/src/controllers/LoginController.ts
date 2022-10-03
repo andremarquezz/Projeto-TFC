@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import ErrorUnauthorized from '../errors/ErrorUnauthorized';
+import ILoginInfo from '../interfaces/ILoginInfo';
 import LoginService from '../services/LoginService';
 
 class LoginController {
@@ -9,9 +11,16 @@ class LoginController {
   };
 
   public login = async (req: Request, res: Response): Promise<void> => {
-    const { username, password } = req.body;
-    const userExists = await this.service.login({ username, password });
-    res.status(200).json(userExists);
+    const { email, password }: ILoginInfo = req.body;
+    const token = await this.service.login({ email, password });
+    res.status(200).json({ token });
+  };
+
+  public getRole = async (req: Request, res: Response): Promise<void> => {
+    const { authorization: token } = req.headers;
+    if (!token) throw new ErrorUnauthorized('Token not found');
+    const role = await this.service.getRole(token);
+    res.status(200).json({ role });
   };
 }
 
