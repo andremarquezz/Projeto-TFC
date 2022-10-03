@@ -15,13 +15,15 @@ class Jwt {
     };
   }
 
-  generateToken = async (email: string): Promise<string> =>
-    jwt.sign({ email }, JWT_SECRET as string, this.jwtConfig);
+  generateToken = async (email: string): Promise<string> => {
+    const payload: IJwtPayload = { email };
+    return jwt.sign(payload, JWT_SECRET as string, this.jwtConfig);
+  };
 
   validateToken = (token: string) => {
     try {
-      const payloadJwt = jwt.verify(token, JWT_SECRET as string);
-      return payloadJwt;
+      const { email } = jwt.verify(token, JWT_SECRET as string) as IJwtPayload;
+      return email;
     } catch (error) {
       throw new ErrorUnauthorized('Expired or invalid token');
     }
