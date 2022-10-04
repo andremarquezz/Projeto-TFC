@@ -1,20 +1,46 @@
 import MatcheModel from '../database/models/MatcheModel';
 
 import 'express-async-errors';
+import TeamModel from '../database/models/TeamModel';
 
 class MatchesService {
   model = MatcheModel;
 
   public async getAllMatches(): Promise<MatcheModel[]> {
-    const matches = await this.model.findAll();
+    const matches = await this.model.findAll({
+      include: [
+        {
+          model: TeamModel,
+          as: 'teamHome',
+          attributes: ['teamName'],
+        },
+        {
+          model: TeamModel,
+          as: 'teamAway',
+          attributes: ['teamName'],
+        },
+      ],
+    });
     return matches;
   }
 
   public async getInProgressMatches(): Promise<MatcheModel[]> {
     const matches = await this.model.findAll({
       where: {
-        inProgress: 1,
+        inProgress: true,
       },
+      include: [
+        {
+          model: TeamModel,
+          as: 'teamHome',
+          attributes: ['teamName'],
+        },
+        {
+          model: TeamModel,
+          as: 'teamAway',
+          attributes: ['teamName'],
+        },
+      ],
     });
     return matches;
   }
@@ -22,8 +48,20 @@ class MatchesService {
   public async getFinishedMatches(): Promise<MatcheModel[]> {
     const matches = await this.model.findAll({
       where: {
-        inProgress: 0,
+        inProgress: false,
       },
+      include: [
+        {
+          model: TeamModel,
+          as: 'teamHome',
+          attributes: ['teamName'],
+        },
+        {
+          model: TeamModel,
+          as: 'teamAway',
+          attributes: ['teamName'],
+        },
+      ],
     });
     return matches;
   }
