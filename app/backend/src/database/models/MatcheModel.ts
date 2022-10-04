@@ -17,6 +17,7 @@ MatcheModel.init(
       type: INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     homeTeam: {
       type: INTEGER,

@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import validateToken from '../middlewares/validateToken';
 import validateInfoLogin from '../middlewares/validateInfoLogin';
 import LoginController from '../controllers/LoginController';
 
@@ -7,7 +8,7 @@ const route = Router();
 const loginController = new LoginController();
 
 route.get('/', loginController.routeHealth);
-route.get('/validate', loginController.getRole);
+route.get('/validate', validateToken, loginController.getRole);
 
 route.post('/', validateInfoLogin, loginController.login);
 

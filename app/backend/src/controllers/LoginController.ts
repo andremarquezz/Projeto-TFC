@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import ErrorUnauthorized from '../errors/ErrorUnauthorized';
 import ILoginInfo from '../interfaces/ILoginInfo';
 import LoginService from '../services/LoginService';
 
@@ -17,9 +16,9 @@ class LoginController {
   };
 
   public getRole = async (req: Request, res: Response): Promise<void> => {
-    const { authorization: token } = req.headers;
-    if (!token) throw new ErrorUnauthorized('Token not found');
-    const role = await this.service.getRole(token);
+    const {
+      user: { role },
+    } = res.locals;
     res.status(200).json({ role });
   };
 }
