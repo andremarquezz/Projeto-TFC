@@ -7,7 +7,7 @@ const route = Router();
 
 const loginController = new LoginController();
 
-route.get('/', loginController.routeHealth);
+route.get('/health', loginController.routeHealth);
 route.get('/validate', validateToken, loginController.getRole);
 
 route.post('/', validateInfoLogin, loginController.login);
