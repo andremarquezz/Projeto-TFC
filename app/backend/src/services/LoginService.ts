@@ -6,12 +6,16 @@ import ErrorUnauthorized from '../errors/ErrorUnauthorized';
 
 import 'express-async-errors';
 import generateToken from '../utils/generateToken';
+import ErrorBadRequest from '../errors/ErrorBadRequest';
 
 class LoginService {
   model = UserModel;
   bcrypt = new HashPassword(Bcrypt);
 
   public async login(userLogin: ILoginInfo): Promise<string> {
+    if (!userLogin.password || !userLogin.email) {
+      throw new ErrorBadRequest('Need to enter a email and password');
+    }
     const userDB = await this.model.findOne({
       where: {
         email: userLogin.email,
