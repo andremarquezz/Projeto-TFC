@@ -18,6 +18,16 @@ class LeaderboardService {
     return leaderboard;
   };
 
+  private sortLeaderboards = (leaderboard: ILeaderboards[]) =>
+    leaderboard.sort((a, b) => {
+      if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
+      if (a.totalVictories !== b.totalVictories) return b.totalVictories - a.totalVictories;
+      if (a.goalsBalance !== b.goalsBalance) return b.goalsBalance - a.goalsBalance;
+      if (a.goalsFavor !== b.goalsFavor) return b.goalsFavor - a.goalsFavor;
+      if (a.goalsOwn !== b.goalsOwn) return b.goalsOwn - a.goalsOwn;
+      return 0;
+    });
+
   public async classificationHome() {
     const matchesByTeams = await this.model.findAll({
       attributes: {
@@ -34,7 +44,8 @@ class LeaderboardService {
         },
       },
     });
-    return this.buildLeaderboards(matchesByTeams);
+    const leaderboard = this.buildLeaderboards(matchesByTeams);
+    return this.sortLeaderboards(leaderboard);
   }
 }
 
