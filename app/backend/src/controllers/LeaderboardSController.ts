@@ -8,7 +8,10 @@ class LeaderboardController {
     res.json({ ok: true, endpoint: '/leaderboard' });
   };
 
-  // public classificationHome = (_req: Request, res: Response): void => {};
+  public classificationHome = async (_req: Request, res: Response): Promise<void> => {
+    const leaderboardHome = await this.service.classificationHome();
+    res.status(200).json(leaderboardHome);
+  };
 }
 
 export default LeaderboardController;

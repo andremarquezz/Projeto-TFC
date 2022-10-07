@@ -7,6 +7,6 @@ const route = Router();
 const leaderboardSController = new LeaderboardSController();
 
 route.get('/health', leaderboardSController.routeHealth);
-// route.get('/home', leaderboardSController.classificationHome);
+route.get('/home', leaderboardSController.classificationHome);
 
 export default route;
